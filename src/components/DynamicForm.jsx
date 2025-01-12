@@ -4,6 +4,7 @@ import { FaPlus, FaTrash } from 'react-icons/fa';
 
 const DynamicForm = () => {
     const [fields, setFields] = useState([{ id: Date.now() }]);
+    const [formData, setFormData] = useState([])
 
     const {
     
@@ -15,9 +16,9 @@ const DynamicForm = () => {
     
     return (
         <div className="container mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
-             <form className="space-y-6 p-6 bg-white rounded-lg">
+     <form className="space-y-6 p-6 bg-white rounded-lg">
         <h2 className="text-2xl font-bold mb-4 text-center text-blue-600">
-          Dynamic Form with Occupation Selector
+          Dynamic Form  Selector
         </h2>
         {fields.map((field) => (
           <div key={field.id} className="flex items-center space-x-4">
@@ -116,6 +117,38 @@ const DynamicForm = () => {
           Submit
         </button>
       </form>
+
+
+            {/* Display the information */}
+            <div className="mt-8">
+        <h3 className="text-xl font-bold mb-4 text-center text-blue-600">
+          Form State:
+        </h3>
+        {formData.length > 0 ? (
+          <table className="table-auto w-full bg-white rounded-lg shadow-md">
+            <thead className="bg-blue-600 text-white">
+              <tr>
+                <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">Occupation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {formData.map((data, index) => (
+                <tr
+                  key={index}
+                  className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
+                >
+                  <td className="px-4 py-2 text-center">{data.name}</td>
+                  <td className="px-4 py-2 text-center">{data.occupation}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="text-center text-red-500">No data submitted yet.</p>
+        )}
+      </div>
+
         </div>
     );
 };
