@@ -1,8 +1,25 @@
-# React + Vite
+# Dynamic Form Selector
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive React-based dynamic form application that allows users to add, edit, and delete fields dynamically. Users can input their name, select their occupation, and submit the form. The submitted data is displayed in a responsive table.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Add multiple input fields dynamically.
+- Input validation using `react-hook-form`.
+- Real-time deletion of fields.
+- Responsive design for all screen sizes.
+- Occupation selection from a predefined dropdown list.
+- Submitted data is displayed in a clean, responsive table.
+
+## Tech Stack
+
+- **Frontend**: React.js, TailwindCSS
+- **Form Management**: `react-hook-form`
+- **Icons**: `react-icons`
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/dynamic-form-selector.git
+   cd dynamic-form-selector
