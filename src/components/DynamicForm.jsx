@@ -8,7 +8,13 @@ const DynamicForm = () => {
 
     const { control,handleSubmit,  setValue,formState: { errors }} = useForm();
 
- 
+    const addField = () => {
+        setFields([...fields, { id: Date.now() }]);
+      };
+
+      const deleteField = (id) => {
+        setFields(fields.filter((field) => field.id !== id));
+      };
 
 
       const onSubmit = (data) => {
@@ -21,8 +27,7 @@ const DynamicForm = () => {
       };
       
 
-    //   Handle Submit Fields
-    
+
     
     return (
         <div className="container mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
@@ -58,11 +63,11 @@ const DynamicForm = () => {
                 )}
               />
               
-              {/* {errors[`name-${field.id}`] && (
+              {errors[`name-${field.id}`] && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors[`name-${field.id}`]?.message}
                 </p>
-              )} */}
+              )}
             </div>
 
             {/* Selected Occupation  */}
@@ -103,7 +108,7 @@ const DynamicForm = () => {
             <button
               type="button"
               className="btn btn-error btn-md mt-6"
-            //   onClick={() => deleteField(field.id)}
+              onClick={() => deleteField(field.id)}
             >
               <FaTrash />
             </button>
@@ -115,7 +120,7 @@ const DynamicForm = () => {
           <button
             type="button"
             className="btn btn-primary flex items-center"
-            // onClick={addField}
+            onClick={addField}
           >
             <FaPlus className="mr-2" />
             Add Field
