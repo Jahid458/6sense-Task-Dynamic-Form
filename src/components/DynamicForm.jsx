@@ -1,49 +1,42 @@
-import  { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { FaPlus, FaTrash } from 'react-icons/fa';
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { FaPlus, FaTrash } from "react-icons/fa";
 
 const DynamicForm = () => {
-    const [fields, setFields] = useState([{ id: Date.now() }]);
-    const [formData, setFormData] = useState([])
+  const [fields, setFields] = useState([{ id: Date.now() }]);
+  const [formData, setFormData] = useState([]);
 
-    const { control,handleSubmit,  setValue,formState: { errors }} = useForm();
+  const { control, handleSubmit, setValue, formState: { errors } } = useForm();
 
-    const addField = () => {
-        setFields([...fields, { id: Date.now() }]);
-      };
+  const addField = () => {
+    setFields([...fields, { id: Date.now() }]);
+  };
 
-      const deleteField = (id) => {
-        setFields(fields.filter((field) => field.id !== id));
-      };
+  const deleteField = (id) => {
+    setFields(fields.filter((field) => field.id !== id));
+  };
+
+  const onSubmit = (data) => {
+    const submittedData = fields.map((field) => ({
+      name: data[`name-${field.id}`],
+      occupation: data[`occupation-${field.id}`],
+    }));
+    setFormData(submittedData);
+  };
+
+  return (
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 bg-gray-100 rounded-lg shadow-lg">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold mb-4 text-center text-blue-600">Dynamic Form Selector</h2>
 
 
-      const onSubmit = (data) => {
 
-        const submittedData = fields.map((field) => ({
-          name: data[`name-${field.id}`],
-          occupation: data[`occupation-${field.id}`],
-        }));
-        setFormData(submittedData);
-      };
-      
-
-
-    
-    return (
-        <div className="container mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
-     <form onSubmit={handleSubmit(onSubmit)}  className="space-y-6 p-6 bg-white rounded-lg">
-        <h2 className="text-2xl font-bold mb-4 text-center text-blue-600">
-          Dynamic Form  Selector
-        </h2>
         {fields.map((field) => (
-          <div key={field.id} className="flex items-center space-x-4">
+          <div key={field.id} className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
 
-
-            {/* Input Fields in this Dynamic Form */}
+            {/* Input name Field */}
             <div className="w-full">
               <label htmlFor={`name-${field.id}`} className="block mb-1 text-gray-700">Name</label>
-
-              {/* Name Conroller */}
               <Controller
                 name={`name-${field.id}`}
                 control={control}
@@ -62,19 +55,14 @@ const DynamicForm = () => {
                   />
                 )}
               />
-              
               {errors[`name-${field.id}`] && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors[`name-${field.id}`]?.message}
-                </p>
+                <p className="text-red-500 text-sm mt-1">{errors[`name-${field.id}`]?.message}</p>
               )}
             </div>
 
-            {/* Selected Occupation  */}
+            {/* Select Field */}
             <div className="w-full">
-              <label htmlFor={`occupation-${field.id}`} className="block mb-1 text-gray-700">
-                Occupation
-              </label>
+              <label htmlFor={`occupation-${field.id}`} className="block mb-1 text-gray-700">Occupation</label>
               <Controller
                 name={`occupation-${field.id}`}
                 control={control}
@@ -98,16 +86,14 @@ const DynamicForm = () => {
                 )}
               />
               {errors[`occupation-${field.id}`] && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors[`occupation-${field.id}`]?.message}
-                </p>
+                <p className="text-red-500 text-sm mt-1">{errors[`occupation-${field.id}`]?.message}</p>
               )}
             </div>
 
             {/* Delete Button */}
             <button
               type="button"
-              className="btn btn-error btn-md mt-6"
+              className="btn btn-error p-2  mt-7  text-sm"
               onClick={() => deleteField(field.id)}
             >
               <FaTrash />
@@ -128,44 +114,39 @@ const DynamicForm = () => {
         </div>
 
         {/* Submit Button */}
-        <button type="submit" className="btn btn-accent w-full text-white">
+        <button type="submit" className="btn btn-accent w-full text-white hover:bg-sky-500 text-lg">
           Submit
         </button>
       </form>
 
-
-            {/* Display the information */}
-            <div className="mt-8">
-        <h3 className="text-xl font-bold mb-4 text-center text-blue-600">
-          Form State:
-        </h3>
+      {/* Display Table */}
+      <div className="mt-8">
+        <h3 className="text-xl font-bold mb-4 text-center text-blue-600">Form State:</h3>
         {formData.length > 0 ? (
-          <table className="table-auto w-full bg-white rounded-lg shadow-md">
-            <thead className="bg-blue-600 text-white">
-              <tr>
-                <th className="px-4 py-2">Name</th>
-                <th className="px-4 py-2">Occupation</th>
-              </tr>
-            </thead>
-            <tbody>
-              {formData.map((data, index) => (
-                <tr
-                  key={index}
-                  className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
-                >
-                  <td className="px-4 py-2 text-center">{data.name}</td>
-                  <td className="px-4 py-2 text-center">{data.occupation}</td>
+          <div className="overflow-x-auto">
+            <table className="table-auto w-full bg-white rounded-lg shadow-md">
+              <thead className="bg-blue-600 text-white">
+                <tr>
+                  <th className="px-4 py-2">Name</th>
+                  <th className="px-4 py-2">Occupation</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {formData.map((data, index) => (
+                  <tr key={index} className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}>
+                    <td className="px-4 py-2 text-center">{data.name}</td>
+                    <td className="px-4 py-2 text-center">{data.occupation}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
           <p className="text-center text-red-500">No data submitted yet.</p>
         )}
       </div>
-
-        </div>
-    );
+    </div>
+  );
 };
 
 export default DynamicForm;
