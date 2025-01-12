@@ -6,17 +6,27 @@ const DynamicForm = () => {
     const [fields, setFields] = useState([{ id: Date.now() }]);
     const [formData, setFormData] = useState([])
 
-    const {
-    
-        control,
-        setValue,
-        formState: { errors },
-      } = useForm();
+    const { control,handleSubmit,  setValue,formState: { errors }} = useForm();
+
+ 
+
+
+      const onSubmit = (data) => {
+
+        const submittedData = fields.map((field) => ({
+          name: data[`name-${field.id}`],
+          occupation: data[`occupation-${field.id}`],
+        }));
+        setFormData(submittedData);
+      };
+      
+
+    //   Handle Submit Fields
     
     
     return (
         <div className="container mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
-     <form className="space-y-6 p-6 bg-white rounded-lg">
+     <form onSubmit={handleSubmit(onSubmit)}  className="space-y-6 p-6 bg-white rounded-lg">
         <h2 className="text-2xl font-bold mb-4 text-center text-blue-600">
           Dynamic Form  Selector
         </h2>
